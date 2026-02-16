@@ -394,6 +394,7 @@
             <format>R8G8B8</format>
           </image>
           <clip>
+          <!-- near se puede cambiar para que ve las cosas mas cerca o mas lejos -->
             <near>0.02</near>
             <far>300</far>
           </clip>
