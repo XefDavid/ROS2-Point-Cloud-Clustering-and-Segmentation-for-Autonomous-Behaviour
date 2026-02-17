@@ -30,7 +30,7 @@ int main()
     pcl::VoxelGrid<PointT> voxel_filter;
     voxel_filter.setInputCloud(cloud);
     // Estos valores son los que van a hacer la grilla más grande o mas pequeña
-    voxel_filter.setLeafSize(0.2, 0.2, 0.2);
+    voxel_filter.setLeafSize(0.5, 0.5, 0.5);
     voxel_filter.filter(*voxel_cloud);
 
     // Pass through Filter x
