@@ -29,11 +29,11 @@ int main()
     pcl::PointCloud<PointT>::Ptr voxel_cloud (new pcl::PointCloud<PointT>) ;
     pcl::VoxelGrid<PointT> voxel_filter;
     voxel_filter.setInputCloud(cloud);
-    voxel_filter.setLeafSize(0.05 , 0.05, 0.05);
+    voxel_filter.setLeafSize(0.08 , 0.08, 0.08);
     voxel_filter.filter(*voxel_cloud);
 
     // ********************************     Pass through Filter
-    // Along X Axis
+    //Along X Axis
     pcl::PointCloud<PointT>::Ptr passthrough_cloud (new pcl::PointCloud<PointT>) ;
     pcl::PassThrough<PointT> passing_x;
     passing_x.setInputCloud(voxel_cloud);
@@ -41,14 +41,14 @@ int main()
     passing_x.setFilterLimits(-1.7,1.7);
     passing_x.filter(*passthrough_cloud);
 
-    // Along Y Axis
+    // // Along Y Axis
     pcl::PassThrough<PointT> passing_y;
     passing_y.setInputCloud(passthrough_cloud);
     passing_y.setFilterFieldName("y");
     passing_y.setFilterLimits(-1.7,1.7);
     passing_y.filter(*passthrough_cloud);
 
-    // ********************************     Planner Segmentation
+    // // ********************************     Planner Segmentation
     pcl::PointIndices::Ptr  inliers (new pcl::PointIndices);
     pcl::ModelCoefficients::Ptr  coefficients (new pcl::ModelCoefficients);
     pcl::PointCloud<PointT>::Ptr plane_segmented_cloud (new pcl::PointCloud<PointT>) ;
@@ -68,7 +68,7 @@ int main()
 
 
     // ********************************     Writing Cloud
-    cloud_saver("plane_segmented.pcd",path,plane_segmented_cloud);
+    cloud_saver("plane_segmented_cloud.pcd",path,passthrough_cloud );
     return 0;
 
 }
