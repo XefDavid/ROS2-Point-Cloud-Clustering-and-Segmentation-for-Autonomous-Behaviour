@@ -25,11 +25,15 @@ target_link_libraries(circular_cloud ${PCL_LIBRARIES})
 add_executable(filtering_segmentation src/3_filtering_segmentation.cpp)
 target_link_libraries(filtering_segmentation ${PCL_LIBRARIES})
 
+add_executable(clustering_segmentation src/4_clustering_filtering_segmentation.cpp)
+target_link_libraries(clustering_segmentation ${PCL_LIBRARIES})
+
 install(TARGETS 
         pcd_import 
         plane_cloud
         circular_cloud
         filtering_segmentation
+        clustering_segmentation
         DESTINATION lib/${PROJECT_NAME})
         
 
