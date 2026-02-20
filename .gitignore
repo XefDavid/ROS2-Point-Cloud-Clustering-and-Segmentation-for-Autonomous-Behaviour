@@ -34,3 +34,5 @@
 # Created files
 *.pcd
 *.png
+*.txt
+*.bin
