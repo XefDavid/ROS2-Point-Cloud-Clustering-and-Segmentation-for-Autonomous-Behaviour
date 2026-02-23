@@ -8,6 +8,10 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(PCL 1.3 REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(pcl_conversions)
 
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
@@ -28,12 +32,21 @@ target_link_libraries(filtering_segmentation ${PCL_LIBRARIES})
 add_executable(clustering_segmentation src/4_clustering_filtering_segmentation.cpp)
 target_link_libraries(clustering_segmentation ${PCL_LIBRARIES})
 
+add_executable(kitti_voxel src/5_kitti_data_voxel.cpp)
+ament_target_dependencies(kitti_voxel rclcpp std_msgs sensor_msgs pcl_conversions)
+target_link_libraries(kitti_voxel ${PCL_LIBRARIES})
+
+add_executable(kd_tree src/6_kd_tree.cpp)
+target_link_libraries(kd_tree ${PCL_LIBRARIES})
+
 install(TARGETS 
         pcd_import 
         plane_cloud
         circular_cloud
         filtering_segmentation
         clustering_segmentation
+        kitti_voxel
+        kd_tree
         DESTINATION lib/${PROJECT_NAME})
         
 

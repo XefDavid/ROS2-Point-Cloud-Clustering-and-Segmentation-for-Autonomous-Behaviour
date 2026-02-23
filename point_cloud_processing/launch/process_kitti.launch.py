@@ -10,10 +10,10 @@ def generate_launch_description():
         Node(
             package='ros2_kitti_publishers', executable='kitti_publishers',output='screen',         
         ),
-        # Node(
-        #     package='point_cloud_processing', executable='segment',output='screen',
-        #     arguments=['-d',config_file_path]
-        # ),
+        Node(
+            package='point_cloud_processing', executable='kitti_voxel',output='screen',
+           
+        ),
     ])
 
    
