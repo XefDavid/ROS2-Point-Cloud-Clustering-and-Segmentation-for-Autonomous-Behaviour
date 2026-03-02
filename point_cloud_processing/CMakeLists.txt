@@ -39,6 +39,9 @@ target_link_libraries(kitti_voxel ${PCL_LIBRARIES})
 add_executable(kd_tree src/6_kd_tree.cpp)
 target_link_libraries(kd_tree ${PCL_LIBRARIES})
 
+add_executable(traffic_segmentation src/7_traffic_segmentation.cpp)
+ament_target_dependencies(traffic_segmentation rclcpp std_msgs sensor_msgs pcl_conversions)
+target_link_libraries(traffic_segmentation ${PCL_LIBRARIES})
 install(TARGETS 
         pcd_import 
         plane_cloud
@@ -47,6 +50,7 @@ install(TARGETS
         clustering_segmentation
         kitti_voxel
         kd_tree
+        traffic_segmentation
         DESTINATION lib/${PROJECT_NAME})
         
 
