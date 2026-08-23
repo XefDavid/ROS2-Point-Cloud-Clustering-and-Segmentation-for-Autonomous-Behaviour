@@ -36,3 +36,20 @@
 *.png
 *.txt
 *.bin
+
+# ROS2 / colcon workspace artifacts
+build/
+install/
+log/
+**/build/
+**/install/
+**/log/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.pyc

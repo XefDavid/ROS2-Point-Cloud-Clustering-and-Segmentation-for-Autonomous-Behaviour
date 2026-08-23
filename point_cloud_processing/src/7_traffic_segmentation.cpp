@@ -15,7 +15,8 @@
 #include <pcl/segmentation/sac_segmentation.h>
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/octree/octree_pointcloud.h>
-#include <pcl/octree/octree.h> 
+#include <pcl/octree/octree.h>
+#include <pcl/common/common.h>
 
 
 using namespace std::chrono_literals;
@@ -81,7 +82,7 @@ private:
     road_extract_indices.filter(*road_cloud);
 
     //=================================================== Traffic clustering ===================================================//
-    pcl::pointCloud<PointT>::Ptr segmented_cluster(new pcl::<PointCloud<PointT>);
+    pcl::PointCloud<PointT>::Ptr segmented_cluster(new pcl::PointCloud<PointT>);
     pcl::PointCloud<PointT>::Ptr all_clusters(new pcl::PointCloud<PointT>);
     std::vector<pcl::PointIndices> cluster_indices;
     pcl::EuclideanClusterExtraction<PointT> ecludian_cluster_extractor;
@@ -90,7 +91,7 @@ private:
 
     struct BBOX{
         float x_min;
-        float x_max:
+        float x_max;
         float y_min;
         float y_max;
         float z_min;
@@ -114,8 +115,8 @@ private:
     {
       if (cluster_indices[i].indices.size() > min_cloud_threshold && cluster_indices[i].indices.size() <max_cloud_threshold)
       {
-       pcl::Pointcloud<PointT>::Ptr reasonable_cluster (new pcl::PointCloud<PointT>);
-       pcl::ExtractIndices<PointT>extract;
+       pcl::PointCloud<PointT>::Ptr reasonable_cluster (new pcl::PointCloud<PointT>);
+       pcl::ExtractIndices<PointT> extract;
        pcl::IndicesPtr indices(new std::vector<int>(cluster_indices[i].indices.begin(), cluster_indices[i].indices.end()));
 
        extract.setInputCloud(road_cloud);
@@ -127,17 +128,16 @@ private:
         Eigen::Vector4f min_pt, max_pt;
         pcl::getMinMax3D<PointT>(*reasonable_cluster, min_pt, max_pt);
 
-        pcl::PointXYZcenter((min_pt[0] + max_pt[0]) / 2.0 (min_pt[1] + max_pt[1] / 2.0 (min_pt[2] + max_pt[2]) / 2.0);
+        pcl::PointXYZ center((min_pt[0] + max_pt[0]) / 2.0, (min_pt[1] + max_pt[1]) / 2.0, (min_pt[2] + max_pt[2]) / 2.0);
         BBOX bbox;
-        bbox.x.min = min_pt[0];
-        bbox.y.min = min_pt[1];
-        bbox.z.min = min_pt[2];
-        bbox.x.max = max_pt[0];
-        bbox.x.max = max_pt[1];
-        bbox.x.min = max_pt[2];
+        bbox.x_min = min_pt[0];
+        bbox.y_min = min_pt[1];
+        bbox.z_min = min_pt[2];
+        bbox.x_max = max_pt[0];
+        bbox.y_max = max_pt[1];
+        bbox.z_max = max_pt[2];
 
-        bboxes.push_back(bbox)
-        )
+        bboxes.push_back(bbox);
 
       }
       
